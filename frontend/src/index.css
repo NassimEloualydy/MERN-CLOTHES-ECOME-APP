@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+*{
+  font-family: 'Nunito', sans-serif;
+ transition:all .3s;
+}
+.scrolTextContainer:nth-child(1){
+  position: relative;
+  height: 75vh;
+  background: linear-gradient(rgba(0, 0, 0,0.5),rgb(26, 24, 24)),url("./assets/images/image1.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;  
+}
+.scrolTextContainer:nth-child(2){
+  position: relative;
+  height: 75vh;
+  background: linear-gradient(rgba(0, 0, 0,0.5),rgb(26, 24, 24)),url("./assets/images/image2.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+.scrolTextContainer:nth-child(3){
+  position: relative;
+  height: 75vh;
+  background: linear-gradient(rgba(0, 0, 0,0.5),rgb(26, 24, 24)),url("./assets/images/image3.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+.menu{
+  height: 100vh;
+  text-align: center;
+  color: white;
+  width: 20%;
+  background-color: #264653;
+  position: fixed;
+  top: 0;
+  right: 0%;  
+  z-index: 9999999999 !important;
+
+}
+.hide_menu{
+  height: 100vh;
+  text-align: center;
+  color: white;
+  width: 20%;
+  background-color: #264653;
+  position: fixed;
+  top: 0;
+  right: -20%;  
+  z-index: 9999999999 !important;
+
+}
+.iconmenu{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: white;
+  z-index: 9999999 !important;
+}
+.close_menu{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 30px;
+  color: white;
+}
+.itemMenu{
+  width: 95%;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: 5px;
+  margin-left: 2.5%;
+  padding: 5px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  transition: .3s;
+}
+.itemMenu:hover{
+  width: 95%;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  margin-left: 2.5%;
+  padding: 5px;
+  cursor: pointer;
+  margin-bottom: 3px;
+
+  transition: .3s;
+  
+}
+.headerSearchInfo{
+  width: 100%;
+  /* height: 400px; */
+  padding-bottom: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: linear-gradient(rgba(0, 0, 0,0.5),rgb(26, 24, 24)),url("./assets/images/header_not_home.jpg");
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  color: white;
+
+
+}
+.toast-success {
+  background-color: #51A351;
+}
+.toast-error {
+  background-color: #BD362F;
+}
+.toast-info {
+  background-color: #2F96B4;
+}
+.toast-warning {
+  background-color: #F89406;
+}
+.imgProduct{
+  height: 170px !important;
+  object-fit: contain !important;
+   
+}
+.Icon{
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px ;
+}
+.Icon_delete{
+  color: #d62828;
+  border-color: #d62828;
+  transition: .3s;
+  cursor: pointer;
+}
+.Icon_delete:hover{
+    background-color: #d62828;
+    color: white;
+    transition: .3s;
+  }
+  .Icon_update{
+    color: #f77f00;
+    border-color: #f77f00;
+    transition: .3s;
+    cursor: pointer;
+  }
+  .Icon_update:hover{
+      background-color: #f77f00;
+      color: white;
+      transition: .3s;
+    }
+    .Icon_details{
+        color: #003049;
+        border-color: #003049;
+        transition: .3s;
+        cursor: pointer;
+      }
+      .Icon_details:hover{
+          background-color: #003049;
+          color: white;
+          transition: .3s;
+        }
+@media(max-width:1000px){
+  .menu{
+    height: 100vh;
+    text-align: center;
+    color: white;
+    width: 100%;
+    background-color: #264653;
+    position: fixed;
+    top: 0;
+    right: 0%;  
+    z-index: 9999999999 !important;
+    
+  }
+
+  
+  .hide_menu{
+    height: 100vh;
+    text-align: center;
+    color: white;
+    width: 100%;
+    background-color: #264653;
+    position: fixed;
+    top: 0;
+    right: -100%;  
+    z-index: 9999999999 !important;
+
+  }
+  
+  
+}
