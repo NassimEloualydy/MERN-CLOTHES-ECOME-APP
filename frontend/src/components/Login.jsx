@@ -1,12 +1,16 @@
 import React,{useState,useEffect} from 'react'
 import Menu from './Menu'
 import Breadcrumb from './Breadcrumb';
-
+import {API_URL} from '../config/config'
+import { useNavigate } from 'react-router-dom';
+import toastr from 'toastr'
 const Login = () => {
     const [breadcumb,setBreadcumb]=useState(["Home"])
     const [menu,setMenu]=useState(false);
+    const navigate=useNavigate()
     const handleChange=(e)=>{
-        setLogin({...login,[e.target.name]:e.target.value})
+
+      setLogin({...login,[e.target.name]:e.target.value})
     }
     const [login,setLogin]=useState({
         email:"",
@@ -14,9 +18,25 @@ const Login = () => {
     })
     const MenuSwitch=(data)=>{
         setMenu(!menu)
+
       }
     const SignUnUser=()=>{
-
+        fetch(`${API_URL}/user/login`,{
+            method:"POST",
+            headers:{
+                "Accept":"application/json",
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(login)
+        }).then(res=>res.json()).then(res=>{
+          if(res.err)
+            toastr.warning(res.err,"Warming",{positionClass:"toast-bottom-right"})
+          if(res.data){
+            localStorage.setItem("user",JSON.stringify(res))
+            toastr.success("Sign in with success","Success",{positionClass:"toast-bottom-right"})
+            navigate('/')
+          }
+        }).catch(err=>console.log(err))
     }
   return (
     <>
@@ -63,7 +83,7 @@ const Login = () => {
                   <input type="text" name="password" onChange={handleChange}  value={login.password} className="form-control" />
                 </div>
                 <div className="row col-md mt-2">
-                  <input type="button" value="Sign In" onClick={SignUnUser} className="btn btn-dark" />
+                  <input type="button" value="Login" onClick={SignUnUser} className="btn btn-dark" />
                 </div>
               </form>
             </div>

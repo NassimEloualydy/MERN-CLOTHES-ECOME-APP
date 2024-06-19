@@ -1,0 +1,23 @@
+const express=require("express");
+const cors=require("cors")
+const mongoose=require("mongoose")
+require("dotenv").config();
+const PORT=process.env.PORT || 6000
+const app=express()
+
+app.use(cors())
+app.use(express.json())
+const userRoutes=require("./routes/userRoutes")
+const productTypeRoutes=require("./routes/productType")
+app.use("/API/user",userRoutes);
+app.use("/API/ProductType",productTypeRoutes);
+const DATABASE=process.env.DATABASE
+mongoose.connect(DATABASE).then(()=>{
+    console.log("Database connected")
+}).catch(err=>{
+    console.log("Somthing went Wrong !!")
+})
+
+app.listen(PORT,()=>{
+    console.log(`App Listen On Port ${PORT}`)
+})

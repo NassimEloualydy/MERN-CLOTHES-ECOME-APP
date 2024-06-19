@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import Menu from './Menu'
 import Breadcrumb from './Breadcrumb';
+import {API_URL} from '../config/config'
+import toastr from 'toastr'
 
-const handleChange=(e)=>{
-    setLogin({...login,[e.target.name]:e.target.value});
-}
 const SignIn = () => {
     const [breadcumb,setBreadcumb]=useState(["Home"])
     const [menu,setMenu]=useState(false);
@@ -17,11 +16,30 @@ const SignIn = () => {
         email:"",
         password:"",
     })
+    const handleChange=(e)=>{
+      setLogin({...login,[e.target.name]:e.target.value});
+    }
+    
     const MenuSwitch=(data)=>{
         setMenu(!menu)
       }
     const SignUnUser=()=>{
+      fetch(`${API_URL}/user/singin`,{
+        method:"POST",
+        headers:{
+          "Accept":"application/json",
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(login)
+      }).then(res=>res.json()).then(res=>{
+        if(res.message){
+          toastr.success(res.message,"Success",{positionClass:"toast-bottom-right"})
+        }
+        if(res.err){
+          toastr.warning(res.err,"Warning",{positionClass:"toast-bottom-right"})
+        }
 
+      }).catch(err=>{console.lof(err)});
     }
   return (
     <>
@@ -61,12 +79,12 @@ const SignIn = () => {
               <form action="">
               <div className="row col-md mt-2">
                   <div className="form-label">First Name</div>
-                  <input type="text" name="first_name" value={login.first_name} onChange={handleChange}   className="form-control" />
+                  <input type="text" onChange={handleChange} name="first_name" value={login.first_name}    className="form-control" />
                 </div>
 
                 <div className="row col-md mt-2">
                   <div className="form-label">Last Name</div>
-                  <input type="text" name="last_name" onChange={handleChange} value={login.last_name}  className="form-control" />
+                  <input type="text" onChange={handleChange} name="last_name"  value={login.last_name}  className="form-control" />
                 </div>
                 <div className="row col-md mt-2">
                   <div className="form-label">Sexe</div>
