@@ -44,6 +44,7 @@ const Menu = () => {
      )}
 {user.first_name && (
       <>
+     <div onClick={NavigateUrl.bind(this,"/Product")} className="itemMenu">Products</div>     
      <div onClick={NavigateUrl.bind(this,"/ProductType")} className="itemMenu">Product Types</div>     
      <div onClick={NavigateUrl.bind(this,"/Log Out")} className="itemMenu">Log Out</div>
       </>
