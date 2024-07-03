@@ -13,6 +13,20 @@
   background-size: cover;
   text-align: center;  
 }
+.icon_stare{
+  color: #F89406;
+  position: relative;
+  top: 3px;
+}
+.img_selected{
+  border: 1px solid black;
+  padding: 5px;
+  padding-bottom: -30px;
+  border-radius: 5px;
+}
+.swiper-pagination{
+  margin-top: 50px !important;
+}
 .scrolTextContainer:nth-child(2){
   position: relative;
   height: 75vh;
@@ -130,6 +144,11 @@
   height: 170px !important;
   object-fit: contain !important;
    
+}
+.imgProductSecond{
+  height: 80px !important;
+  object-fit: contain !important;
+   cursor: pointer;
 }
 .Icon{
   padding: 5px;

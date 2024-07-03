@@ -6,6 +6,7 @@ import Login from '../components/Login'
 import ProductType from '../components/ProductType'
 import PrivateRoute from './PrivateRoute'
 import Product from '../components/Product'
+import ProductInfo from '../components/ProductInfo'
 const RouteSystem = () => {
   return (
     <div>
@@ -15,11 +16,15 @@ const RouteSystem = () => {
             <Route path="/" element={<Home/>} />
             <Route path="/SignIn" element={<SignIn/>} />
             <Route path="/Login" element={<Login/>} />
+            
             <Route element={<PrivateRoute/>}>
               <Route path="/ProductType" element={<ProductType/>} />
             </Route>
             <Route element={<PrivateRoute/>}>
               <Route path="/Product" element={<Product/>} />
+            </Route>
+            <Route element={<PrivateRoute/>}>
+              <Route path="/ProductInfo/:_id" element={<ProductInfo/>} />
             </Route>
 
         </Routes>

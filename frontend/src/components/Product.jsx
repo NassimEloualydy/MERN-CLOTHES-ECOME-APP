@@ -4,8 +4,11 @@ import { API_URL } from "../config/config";
 import toastr, { options } from "toastr";
 import { CMultiSelect } from "@coreui/react-pro";
 import "@coreui/coreui-pro/dist/css/coreui.min.css";
+import { useNavigate } from 'react-router-dom'
 
 const Product = () => {
+  const navigate=useNavigate()
+
   const [breadcumb, setBreadcumb] = useState(["Home"]);
   const [menu, setMenu] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -25,6 +28,7 @@ const Product = () => {
     if (!Array.isArray(e)) {
       setSearchData({ ...searchData, [e.target.name]: e.target.value });
     } else {
+      if(e.target)
       setSearchData({ ...searchData, size: e.target.value });
     }
   };
@@ -63,9 +67,9 @@ const Product = () => {
     fetch(`${API_URL}/product/getProductTypes`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${data}`,
+        "Authorization": `Bearer ${data}`,
       },
       body: JSON.stringify(product),
     })
@@ -93,6 +97,7 @@ const Product = () => {
   };
   const submitProduct = () => {
     const { data } = JSON.parse(localStorage.getItem("user"));
+    productFormData.set("_id",product._id)
     fetch(`${API_URL}/product/submitProduct`, {
       method: "POST",
       headers: {
@@ -187,6 +192,10 @@ const Product = () => {
     }).catch(err=>console.log(err))
 
   }
+  const ProductInfo=(_id)=>{
+    navigate(`/ProductInfo/${_id}`)
+
+  }
   const  loadData=(data)=>{
     setProduct({
         _id:data._id,
@@ -199,8 +208,17 @@ const Product = () => {
         status: data.status,
         size: data.sizes,
     })
-    console.log(data.sizes.split(','))    
-    console.log(sizes)    
+
+    // setProductFormData(new FormData())
+    productFormData.set("_id",data._id);
+    productFormData.set("price",data.price);
+    productFormData.set("category",data.category._id);
+    productFormData.set("qte",data.qte);
+    productFormData.set("description",data.description);
+    productFormData.set("rating",data.rating);
+    productFormData.set("status",data.status);
+    productFormData.set("size",data.size);
+    productFormData.set("name",data.name);
     for (var i = 0; i < data.sizes.split(',').length; i++) {
         for(var j = 0; j < sizes.length; j++){
             if(sizes[j].value==data.sizes.split(',')[i]){
@@ -558,7 +576,7 @@ const Product = () => {
         <div className="container">
           <div className="row">
             {products.map((item, index) => (
-              <div key={index} className="col-md-6 col-lg-4 mt-2">
+              <div  key={index} className="col-md-6 col-lg-4 mt-2">
                 <div className="card" style={{ position: "relative" }}>
                   {item.status == "In Stock" && (
                     <>
@@ -600,7 +618,7 @@ const Product = () => {
                             <ion-icon   name="pencil-outline"></ion-icon>
                     </span>
 
-                  <img
+                  <img onClick={ProductInfo.bind(this,item._id)}
                     src={`${API_URL}/product/getPhoto/${item._id}/photo_1`}
                     alt=""
                     className="card-img-top img-main img-fluid imgProduct"
@@ -631,7 +649,7 @@ const Product = () => {
                           <div className="fw-bolder">Size</div>
                           <div className="fw-normal">
                             {item.sizes.split(",").map((it, ind) => (
-                               <>
+                               <span key={ind}>
                                                               {it=='3XL' && (                              
                                 <span
                                 style={{
@@ -714,7 +732,7 @@ const Product = () => {
 
                               </span>
 )}
-                               </>
+                               </span>
                             ))}
                           </div>
                         </div>

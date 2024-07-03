@@ -8,6 +8,7 @@ exports.submitProduct=async (req,res)=>{
     const form=new formidable.IncomingForm()
     form.keepExtentions=true
     form.parse(req,async (err,fields,files)=>{
+        console.log(fields._id)
         if(fields._id==""){
             if(!files.photo_1)
                 return res.status(400).json({err:"Please the first photo is required !!"})
@@ -38,42 +39,49 @@ exports.submitProduct=async (req,res)=>{
                 return res.status(400).json({err:error.details[0].message})
             var p=await Product.find().select("-photo_1 -photo_2 -photo_3 -photo_4 -photo_5").and([{name},{_id:{$ne:_id}}])  
             if(p.length!=0)
-                return res.status(400).json({err:"Please the name is already required !!"}).and([{description},{_id:{$ne:_id}}]);
-            p=await Product.find().select("-photo_1 -photo_2 -photo_3 -photo_4 -photo_5")  
+                return res.status(400).json({err:"Please the name is already exist !!"});
+            p=await Product.find().select("-photo_1 -photo_2 -photo_3 -photo_4 -photo_5").and([{description},{_id:{$ne:_id}}])  
             if(p.length!=0)
-                return res.status(400).json({err:"Please the description is already required !!"});
+                return res.status(400).json({err:"Please the description is already exist !!"});
     
             var data_sizes=[]
             for(var i=0;i<JSON.parse(sizes).length;i++){
                 data_sizes.push(JSON.parse(sizes)[i].value)
             }
+            const data_updated={                        name,description,price,category,qte,sizes:""+data_sizes+"",rating,status,
+            }
+            if(files.photo_1)
+                data_updated.photo_1={
+                    data:fs.readFileSync(files.photo_1.path),
+                    contentType:files.photo_1.type
+                }
+            if(files.photo_2)
+                data_updated.photo_2={
+                    data:fs.readFileSync(files.photo_2.path),
+                    contentType:files.photo_2.type
+                }
+
+            if(files.photo_3)
+                data_updated.photo_3={
+                    data:fs.readFileSync(files.photo_3.path),
+                    contentType:files.photo_3.type
+                }
+            if(files.photo_4)
+                data_updated.photo_4={
+                    data:fs.readFileSync(files.photo_4.path),
+                    contentType:files.photo_4.type
+                }
+            if(files.photo_5)
+                data_updated.photo_5={
+                    data:fs.readFileSync(files.photo_5.path),
+                    contentType:files.photo_5.type
+                }
             const pr=await Product.findOneAndUpdate(
                 {_id},
                 {
-                    $set:{
-
-                        name,description,price,category,qte,sizes:""+data_sizes+"",rating,status,
-                        photo_1:{
-                            data:fs.readFileSync(files.photo_1.path),
-                            contentType:files.photo_1.type
-                        },
-                        photo_2:{
-                            data:fs.readFileSync(files.photo_2.path),
-                            contentType:files.photo_2.type
-                        },
-                        photo_3:{
-                            data:fs.readFileSync(files.photo_3.path),
-                            contentType:files.photo_3.type
-                        },
-                        photo_4:{
-                            data:fs.readFileSync(files.photo_4.path),
-                            contentType:files.photo_4.type
-                        },
-                        photo_5:{
-                            data:fs.readFileSync(files.photo_5.path),
-                            contentType:files.photo_5.type
-                        },
-                    }
+                    $set:
+                        data_updated
+                    
                 
             },{new:true})
             if(pr)
@@ -198,4 +206,16 @@ exports.deleteProduct=async (req,res)=>{
         return res.json({msg:"Deleted with Success"})
     return res.status(400).json({err:pr})
 
+}
+exports.getProductInfo=async (req,res)=>{
+    const _id=req.params._id
+    const Data=await Product.findOne({_id}).select("-photo_1 -photo_2 -photo_3 -photo_4 -photo_5").populate([{
+        path:'category',
+        model:"ProductType",
+        select:['_id','name'],
+       
+    }])
+    if(Data)
+        return res.json({Data})
+    return res.status(400).json({err:Data})
 }
