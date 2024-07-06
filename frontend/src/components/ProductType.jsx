@@ -2,11 +2,14 @@ import React,{useState,useEffect} from 'react'
 import Menu from './Menu'
 import { API_URL } from '../config/config'
 import toastr from 'toastr'
+import Breadcrumb from './Breadcrumb';
+
 const ProductType = () => {
     const [breadcumb,setBreadcumb]=useState(["Home"])
     const [menu,setMenu]=useState(false);
     var offset=0;
     const [types,setTypes]=useState([]);
+    
     const [searchData,setSearchData]=useState({
         name:"",description:""
     })
@@ -152,6 +155,8 @@ const ProductType = () => {
 </div>
 
 </div>
+<Breadcrumb PathPage={breadcumb} ActivePage="Categories"/>
+
 <section >
             <div className="container">
         <div className="row mt-5">

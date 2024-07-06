@@ -10,11 +10,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import Breadcrumb from './Breadcrumb';
+
 
 const ProductInfo = () => {
   SwiperCore.use([Autoplay]);
 
-    const [breadcumb,setBreadcumb]=useState(["Home"])
+    const [breadcumb,setBreadcumb]=useState(["Home","Products"])
     const [menu,setMenu]=useState(false);
     const [urlPhoto,setUrlPhoto]=useState('')
     const [stars,setStars]=useState([])
@@ -105,7 +107,10 @@ const ProductInfo = () => {
         </div>
 
     </div>
-    <section className="py-5">
+          <Breadcrumb PathPage={breadcumb} ActivePage={product.name}/>
+
+
+    <section className="">
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-lg-4 mt-2">

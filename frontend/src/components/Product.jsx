@@ -5,6 +5,7 @@ import toastr, { options } from "toastr";
 import { CMultiSelect } from "@coreui/react-pro";
 import "@coreui/coreui-pro/dist/css/coreui.min.css";
 import { useNavigate } from 'react-router-dom'
+import Breadcrumb from './Breadcrumb';
 
 const Product = () => {
   const navigate=useNavigate()
@@ -228,7 +229,7 @@ const Product = () => {
         }
       }
   
-  }
+}
   return (
     <>
       <div className={menu ? "menu" : "hide_menu"}>
@@ -345,10 +346,12 @@ const Product = () => {
           </div>
         </div>
       </div>
+          <Breadcrumb PathPage={breadcumb} ActivePage="Products"/>
+
 
       <section>
         <div className="container">
-          <div className="row mt-5">
+          <div className="row mt-0 mb-0">
             <div className="col-md">
               <input
                 type="button"
@@ -574,6 +577,7 @@ const Product = () => {
       </section>
       <section className="py-5">
         <div className="container">
+
           <div className="row">
             {products.map((item, index) => (
               <div  key={index} className="col-md-6 col-lg-4 mt-2">
