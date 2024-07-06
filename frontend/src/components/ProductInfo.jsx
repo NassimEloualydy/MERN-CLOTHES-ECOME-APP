@@ -1,11 +1,11 @@
-import SwiperCore from 'swiper'
 import React,{useState,useEffect} from 'react'
 import Menu from './Menu'
 import { useNavigate,useParams } from 'react-router-dom';
 import { API_URL } from '../config/config'
 import toastr from 'toastr'
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation,Autoplay, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore from 'swiper'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

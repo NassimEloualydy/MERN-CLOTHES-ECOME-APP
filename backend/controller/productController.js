@@ -219,3 +219,24 @@ exports.getProductInfo=async (req,res)=>{
         return res.json({Data})
     return res.status(400).json({err:Data})
 }
+exports.getProductFormHome=async (req,res)=>{
+    const data={}
+    data.produts=await Product.find().select("-photo_1 -photo_2 -photo_3 -photo_4 -photo_5").populate([
+        {
+            path:"",
+            path:'category',
+            model:"ProductType",
+            select:['_id','name'],
+    
+        }
+    ]).sort([['created','desc']])
+    if(!data.produts)
+        return res.status(400).json({err:data})
+    
+    data.categories=await productType.find().select().sort([['created_at','desc']])
+    
+    if(!data.categories)
+        return res.status(400).json({err:data})
+    return res.json({data})
+
+}

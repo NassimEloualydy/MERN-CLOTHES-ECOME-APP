@@ -13,6 +13,10 @@
   background-size: cover;
   text-align: center;  
 }
+.swiperCutomSize{
+  width: 90%;
+  margin-left: 3%;
+}
 .icon_stare{
   color: #F89406;
   position: relative;
@@ -189,6 +193,10 @@
           transition: .3s;
         }
 @media(max-width:1000px){
+  .titleCategHome{
+    margin-left: 30px !important;
+  }
+  
   .menu{
     height: 100vh;
     text-align: center;
