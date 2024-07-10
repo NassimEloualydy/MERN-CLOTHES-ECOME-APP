@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import Menu from './Menu'
 import Breadcrumb from './Breadcrumb';
 import { API_URL } from '../config/config'
@@ -11,10 +11,16 @@ import { Navigation,Autoplay, Pagination, Scrollbar, A11y } from 'swiper/modules
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-
+import Basket from './Basket';
 const Home = () => {
 
   SwiperCore.use([Autoplay]);
+  const childRef = useRef();
+  const addToBasket = (_id) => {
+    if (childRef.current) {
+      childRef.current.addToBasket(_id);
+    }
+  };
   const [breadcumb,setBreadcumb]=useState(["Home"])
     const [menu,setMenu]=useState(false);
     const [products,setProduct]=useState([])
@@ -58,6 +64,7 @@ useEffect(()=>{
               <br />
               <br />
               <Menu/>
+              <Basket ref={childRef}/>
               <span className="iconmenu" onClick={MenuSwitch.bind(this,true)}>
 
 <ion-icon name="menu-outline"></ion-icon>
@@ -320,6 +327,13 @@ onSlideChange={() => console.log('slide change')}
                           <div className="fw-normal">{product.price} $</div>
                         </div>
                       </div>
+                      <div className="d-flex text-start">
+                      <div className="row py-2 p-3 w-100">
+
+                        <input type="button" value="Add To Basket" onClick={addToBasket.bind(this,product._id)} className="btn btn-dark w-100" />
+                        </div>
+                        </div>
+
 
                       {/* <div className="d-flex text-start">
                         <div className="row py-2 p-3">

@@ -75,6 +75,16 @@
   z-index: 9999999999 !important;
 
 }
+
+.basket{
+  position: fixed;
+  top: 10px;
+  right: 50px;
+  font-size: 30px;
+  color: white;
+  z-index: 9999999 !important;
+}
+
 .iconmenu{
   position: fixed;
   top: 10px;
