@@ -1,9 +1,12 @@
 import React,{ forwardRef,useState, useEffect, useImperativeHandle } from 'react'
 import { API_URL } from "../config/config";
 import toastr from "toastr";
+import { useNavigate } from 'react-router-dom'
 
 const Basket = forwardRef((props, ref) => {
     const [nbrProducts,setNbrProducts]=useState(0)
+  const navigate=useNavigate()
+
     useEffect(()=>{
         const { data } = JSON.parse(localStorage.getItem("user"));
         fetch(`${API_URL}/basket/getMyBasket/`, {
@@ -28,7 +31,9 @@ const Basket = forwardRef((props, ref) => {
     
 
     },[])
-
+    const gotPaiment=()=>{
+      navigate("/Paiment") 
+    }
     useImperativeHandle(ref, () => ({
         
         addToBasket(_id) {
@@ -60,7 +65,7 @@ const Basket = forwardRef((props, ref) => {
     }));
   return(
     <>
-    <span data-bs-toggle="modal" data-bs-target="#modelFormBasket" className="basket">
+    <span onClick={gotPaiment} className='basket'>
         <span className='badge' style={{
             backgroundColor: "#2a9d8f",
             fontSize:'10px',

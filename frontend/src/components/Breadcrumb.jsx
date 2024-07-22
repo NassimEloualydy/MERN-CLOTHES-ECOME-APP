@@ -7,6 +7,8 @@ const Breadcrumb = ({PathPage,ActivePage}) => {
     navigate('/')
   if(url.item=="Products")
     navigate('/product')
+  if(url.item=="Paiment")
+    navigate('/Paiment')
 
  }
   return (

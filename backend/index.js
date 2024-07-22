@@ -11,10 +11,12 @@ const userRoutes=require("./routes/userRoutes")
 const productTypeRoutes=require("./routes/productType")
 const productRoutes=require("./routes/ProductRoutes");
 const basketPorudct=require("./routes/BasketRouter")
+const braintreeRoute=require("./routes/BraintreeRouter")
 app.use("/API/user",userRoutes);
 app.use("/API/product",productRoutes);
 app.use("/API/ProductType",productTypeRoutes);
 app.use("/API/basket",basketPorudct);
+app.use("/API/braintree",braintreeRoute);
 const DATABASE=process.env.DATABASE
 
 mongoose.connect(DATABASE).then(()=>{

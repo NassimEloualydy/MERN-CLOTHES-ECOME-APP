@@ -7,6 +7,8 @@ import ProductType from '../components/ProductType'
 import PrivateRoute from './PrivateRoute'
 import Product from '../components/Product'
 import ProductInfo from '../components/ProductInfo'
+import Paiment from '../components/Paiment'
+import Checkout from '../components/Checkout'
 const RouteSystem = () => {
   return (
     <div>
@@ -25,6 +27,12 @@ const RouteSystem = () => {
             </Route>
             <Route element={<PrivateRoute/>}>
               <Route path="/ProductInfo/:_id" element={<ProductInfo/>} />
+            </Route>
+            <Route element={<PrivateRoute/>}>
+              <Route path="/Paiment/" element={<Paiment/>} />
+            </Route>
+            <Route element={<PrivateRoute/>}>
+              <Route path="/Checkout/" element={<Checkout/>} />
             </Route>
 
         </Routes>

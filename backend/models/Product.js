@@ -7,7 +7,6 @@ const productSchema= new mongoose.Schema({
     photo_4:{data:Buffer,contentType:String},
     photo_5:{data:Buffer,contentType:String},
     name:{type:String,required:true},
-    description:{type:String,required:true},
     price:{type:String,required:true},
     category:{type:ObjectId,ref:"ProductType",required:true},
     qte:{type:String,required:true},
