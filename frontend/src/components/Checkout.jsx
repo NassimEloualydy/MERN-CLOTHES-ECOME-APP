@@ -4,12 +4,21 @@ import { useNavigate,useParams } from 'react-router-dom';
 import { API_URL } from '../config/config'
 import toastr from 'toastr'
 import Breadcrumb from './Breadcrumb';
-// import DropIn from "braintree-web-drop-in-react";
+// import DropIn from 'braintree-web-drop-in-react';
+// import {DropIn} from 'braintree-web-drop-in'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import {PaymentElement} from '@stripe/react-stripe-js';
+
+const stripe= await loadStripe("pk_test_51Pn4iDHcKVRDweYXVWq8IY9iemhtaWDhGZB08n2317nf67GfNd4VtwWVMcx000EQkyX8diAwBJDLKZahXjueWPBM00uk4ALoRS")
+
 const Checkout = () => {
     const [breadcumb,setBreadcumb]=useState(["Home","Paiment"])
     const [products,setProducts]=useState([]);
-  const navigate=useNavigate()
-  const [menu,setMenu]=useState(false);
+    const navigate=useNavigate()
+
+    const [menu,setMenu]=useState(false);
+    const [token,setToken]=useState("")
    const MenuSwitch=(data)=>{
     setMenu(!menu)
   }
@@ -23,10 +32,17 @@ const Checkout = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-            console.log(res);
+          if(res.client_secret)
+            setToken(res.client_secret)
+          else  
+          console.log(res);
         })
   
   },[])
+  const options = {
+    // passing the client secret obtained from the server
+    clientSecret: 'pi_3Pn6FbHcKVRDweYX0Om9vCI2_secret_6eda67rfcSo8oQOCnJ0DHbIx6',
+  };
   return (
     <>
                                  <div className={menu?"menu":"hide_menu"}>
@@ -62,17 +78,26 @@ const Checkout = () => {
                 <h3>Login Form</h3>
               </div>
               <form action="">
-                <div className="row col-md mt-2">
+              <Elements stripe={stripe} options={options}>
+              <form>
+      <PaymentElement />
+      <button className="btn btn-dark mt-3">Submit</button>
+    </form>    </Elements>
+                {/* <div className="row col-md mt-2">
                   <div className="form-label">Email</div>
                   <input type="text" name="email"    className="form-control" />
                 </div>
                 <div className="row col-md mt-2">
                   <div className="form-label">Password</div>
                   <input type="text" name="password"    className="form-control" />
-                </div>
-                <div className="row col-md mt-2">
+                </div> */}
+                  {/* <DropIn
+            options={{ authorization: token }}
+            onInstance={(instance) => (this.instance = instance)}
+          /> */}
+                {/* <div className="row col-md mt-2">
                   <input type="button" value="Login"  className="btn btn-dark" />
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
