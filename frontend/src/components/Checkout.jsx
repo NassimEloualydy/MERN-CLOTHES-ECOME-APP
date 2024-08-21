@@ -9,13 +9,15 @@ import Breadcrumb from './Breadcrumb';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import {PaymentElement} from '@stripe/react-stripe-js';
-
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import paymentComponent from './paymentComponent';
 const stripe= await loadStripe("pk_test_51Pn4iDHcKVRDweYXVWq8IY9iemhtaWDhGZB08n2317nf67GfNd4VtwWVMcx000EQkyX8diAwBJDLKZahXjueWPBM00uk4ALoRS")
 
 const Checkout = () => {
     const [breadcumb,setBreadcumb]=useState(["Home","Paiment"])
     const [products,setProducts]=useState([]);
     const navigate=useNavigate()
+
 
     const [menu,setMenu]=useState(false);
     const [token,setToken]=useState("")
@@ -43,6 +45,23 @@ const Checkout = () => {
     // passing the client secret obtained from the server
     clientSecret: 'pi_3Pn6FbHcKVRDweYX0Om9vCI2_secret_6eda67rfcSo8oQOCnJ0DHbIx6',
   };
+  const cunfirmPayment= async (e)=>{
+    e.preventDefault();
+    // console.log(e)
+    // const data = await stripe.confirmCardPayment('pi_3Pn6FbHcKVRDweYX0Om9vCI2_secret_6eda67rfcSo8oQOCnJ0DHbIx6',{
+    //   payment_method: 'pi_3PojW2HcKVRDweYX1AIDj1PJ',
+
+    // });
+    // console.log(data)
+    var Field_numberInput=document.getElementById("Field-numberInput");
+    var Field_expiryInput=document.getElementById("Field-expiryInput");
+    var Field_cvcInput=document.getElementById("Field-cvcInput");
+    var Field_countryInput=document.getElementById("Field-countryInput");
+    alert(Field_numberInput)
+    alert(Field_expiryInput)
+    alert(Field_cvcInput)
+    alert(Field_countryInput)
+  }
   return (
     <>
                                  <div className={menu?"menu":"hide_menu"}>
@@ -77,12 +96,13 @@ const Checkout = () => {
               <div className="card-title">
                 <h3>Login Form</h3>
               </div>
-              <form action="">
+              <form >
               <Elements stripe={stripe} options={options}>
               <form>
       <PaymentElement />
-      <button className="btn btn-dark mt-3">Submit</button>
-    </form>    </Elements>
+      <button className="btn btn-dark mt-3" onClick={cunfirmPayment}>Submit</button>
+    </form> 
+       </Elements>
                 {/* <div className="row col-md mt-2">
                   <div className="form-label">Email</div>
                   <input type="text" name="email"    className="form-control" />

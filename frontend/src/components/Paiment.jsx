@@ -36,7 +36,28 @@ const Paiment = () => {
       .catch((err) => console.log(err));
   }
   const GoCheckout=()=>{
-    navigate("/Checkout")
+    // navigate("/Checkout")
+    const { data } = JSON.parse(localStorage.getItem("user"));
+    fetch(`${API_URL}/basket/ConfirmBakset`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${data}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.msg) {
+            toastr.success(res.msg,"Success",{positionClass:"toast-bottom-right"})
+            // getProductFromBasket()
+            navigate("/")
+          } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log(err));
+
 
   }
   const cancelBakset=()=>{

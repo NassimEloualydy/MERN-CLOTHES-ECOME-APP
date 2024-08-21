@@ -24,7 +24,7 @@ const Basket = forwardRef((props, ref) => {
         positionClass: "toast-bottom-right",
       });
     if (res.data) {
-      setNbrProducts(parseInt(res.data)+1)
+      setNbrProducts(res.data.length)
     }
           })
           .catch((err) => console.log(err));
@@ -56,7 +56,30 @@ const Basket = forwardRef((props, ref) => {
           toastr.success(res.msg, "Success", {
             positionClass: "toast-bottom-right",
           });
-          setNbrProducts(nbrProducts+1)
+          const { data } = JSON.parse(localStorage.getItem("user"));
+          fetch(`${API_URL}/basket/getMyBasket/`, {
+            method: "POST",
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${data}`,
+            },
+          })
+            .then((res) => res.json())
+            .then((res) => {
+      if (res.err)
+        toastr.warning(res.err, "Warning", {
+          positionClass: "toast-bottom-right",
+        });
+      if (res.data) {
+        setNbrProducts(res.data.length)
+      }
+            })
+            .catch((err) => console.log(err));
+      
+  
+      
+  
         }
               })
               .catch((err) => console.log(err));

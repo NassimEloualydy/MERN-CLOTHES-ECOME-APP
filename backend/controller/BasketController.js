@@ -3,7 +3,7 @@ const Product=require("../models/Product")
 exports.addBasket=async (req,res)=>{
     const _id=req.params._id
     const user=req.user._id
-    var b=await Basket.find().select().and([{user:user,product:_id}])
+    var b=await Basket.find().select().and([{user:user,product:_id,status:'In Progress'}])
     if(b.length==0){
         b =await Basket.create({
                product:_id,
@@ -16,7 +16,7 @@ exports.addBasket=async (req,res)=>{
         return res.status(400).json({err:b})
     }
     if(b.length==1){
-        b =await Basket.findOne({user:user,product:_id})
+        b =await Basket.findOne({user:user,status:'In Progress',product:_id})
         var data=await Basket.findOneAndUpdate(
             {_id:b._id},
             {$set:{
@@ -32,17 +32,12 @@ exports.addBasket=async (req,res)=>{
 }       
 exports.getMyBasket=async (req,res)=>{
     const user=req.user._id
-    const data=await Basket.find({user:user}).select()
-    var nbr=0
-    data.forEach((item)=>{
-        nbr=nbr+parseInt(item.qte)
-    })
+    const data=await Basket.find().select().and([{user:user},{status:'In Progress'}])
     if(data)
-            return res.json({data:nbr})
+            return res.json({data:data})
     return res.status(400).json({err:data})    
 }
 exports.getProductFromBasket=async (req,res)=>{
-    console.log(req.user._id)
     const data=await Basket.find().select().and([
         {user:req.user._id},
         {status:"In Progress"},
@@ -68,6 +63,7 @@ exports.getProductFromBasket=async (req,res)=>{
     }])
     if(data)
         return res.json({data})
+    
     return res.status(400).json({err:data})
     
 }
@@ -106,4 +102,27 @@ if(!data)
     })
     return res.json({msg:"Order Canceld with success"})
     
+}
+exports.ConfirmBakset=async (req,res)=>{
+    const data=await Basket.find().select().and([
+        {user:req.user._id},
+        {status:"In Progress"},   
+    ])
+
+    const result=await Basket.updateMany({
+        $and:[
+            {user:req.user._id},
+            {status:"In Progress"},   
+    
+        ]
+    },{
+        $set:{
+            status:'Confirmed'
+
+        }
+    })
+    if(result)
+        return res.json({msg:"Order Confirmed with success"})
+    return res.status(400).json({err:result})
+
 }
