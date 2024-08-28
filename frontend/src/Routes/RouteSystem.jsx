@@ -9,6 +9,7 @@ import Product from '../components/Product'
 import ProductInfo from '../components/ProductInfo'
 import Paiment from '../components/Paiment'
 import Checkout from '../components/Checkout'
+import Orders from '../components/Orders'
 const RouteSystem = () => {
   return (
     <div>
@@ -33,6 +34,10 @@ const RouteSystem = () => {
             </Route>
             <Route element={<PrivateRoute/>}>
               <Route path="/Checkout/" element={<Checkout/>} />
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+              <Route path="/Orders/" element={<Orders/>} />
             </Route>
 
         </Routes>

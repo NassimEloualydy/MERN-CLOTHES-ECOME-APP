@@ -100,7 +100,7 @@ if(!data)
         if(!item)
             return res.status(400).json({err:item})
     })
-    return res.json({msg:"Order Canceld with success"})
+return res.json({msg:"Order Canceld with success"})
     
 }
 exports.ConfirmBakset=async (req,res)=>{
@@ -125,4 +125,39 @@ exports.ConfirmBakset=async (req,res)=>{
         return res.json({msg:"Order Confirmed with success"})
     return res.status(400).json({err:result})
 
+}
+exports.getOrders=async (req,res)=>{
+    const offset=req.params.offset
+    const { product,
+        qte,
+        first_name,
+        last_name,
+        status,
+        date}=req.body
+    const searchQuery={}
+    searchQuery.qte={$regex:'.*'+qte+'.*',$options:'i'}
+    searchQuery.status={$regex:'.*'+status+'.*',$options:'i'}
+    const data=await Basket.find(searchQuery).populate([
+        {
+            model:'Product',
+            path:'product',
+            select:['name'],
+            match:{
+                name:{$regex:'.*'+product+'.*',$options:'i'}
+            }
+        },{
+            model:'User',
+            path:'user',
+            select:['first_name','last_name'],
+            match:{
+                first_name:{$regex:'.*'+first_name+'.*',$options:'i'},
+                last_name:{$regex:'.*'+last_name+'.*',$options:'i'}
+            }
+
+        }
+    ]).sort([['creatd','desc']]).limit(6).skip(offset)
+    if(data)
+        return res.json({data})
+    return res.status(400).json({err:data})
+    
 }
